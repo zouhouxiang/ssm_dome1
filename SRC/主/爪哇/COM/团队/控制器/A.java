@@ -7,5 +7,5 @@ package com.team.controller;/*
  */
 
 public class A {
-
+  int a=1000;
 }
