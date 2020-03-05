@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.mapper.StudentsMapper">
+  <resultMap id="BaseResultMap" type="com.team.entity.Students">
+    <id column="xh" jdbcType="INTEGER" property="xh" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="age" jdbcType="TINYINT" property="age" />
+    <result column="tel" jdbcType="CHAR" property="tel" />
+    <result column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="dz" jdbcType="VARCHAR" property="dz" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    xh, name, sex, birthday, age, tel, gid, dz
+  </sql>
+  <select id="selectByExample" parameterType="com.team.entity.StudentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from students
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from students
+    where xh = #{xh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from students
+    where xh = #{xh,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.team.entity.Students">
+    insert into students (xh, name, sex, 
+      birthday, age, tel, gid, 
+      dz)
+    values (#{xh,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{age,jdbcType=TINYINT}, #{tel,jdbcType=CHAR}, #{gid,jdbcType=INTEGER}, 
+      #{dz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.team.entity.Students">
+    insert into students
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        xh,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="dz != null">
+        dz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        #{xh,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=TINYINT},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=CHAR},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="dz != null">
+        #{dz,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.team.entity.Students">
+    update students
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=CHAR},
+      </if>
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="dz != null">
+        dz = #{dz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where xh = #{xh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.team.entity.Students">
+    update students
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      age = #{age,jdbcType=TINYINT},
+      tel = #{tel,jdbcType=CHAR},
+      gid = #{gid,jdbcType=INTEGER},
+      dz = #{dz,jdbcType=VARCHAR}
+    where xh = #{xh,jdbcType=INTEGER}
+  </update>
+  <select id="fenyechaxun" resultType="Students" parameterType="FenYe">
+select * from students inner join grade on students.gid=grade.gid  where 1=1
+    <if test="gid != null">
+      gid=#{gid}
+    </if>
+    <if test="dz != null">
+      dz=concat("%",#{dz},"%")
+    </if>
+    <if test="">
+      limit #{page},#{pagesize}
+    </if>
+
+  </select>
+  <select id="hangshu" parameterType="FenYe" resultType="int">
+    select count(1) from students where 1=1
+    <if test="gid != null">
+      gid=#{gid}
+    </if>
+    <if test="dz != null">
+      dz=concat("%",#{dz},"%")
+    </if>
+  </select>
+  <select id="dantiaochaxun" resultType="Students" parameterType="int">
+    select xh,name,sex,birthday,age,dz from students where gid=#{gid}
+  </select>
+
+  <select id="selectStudents" parameterType="StudentsExample" resultType="Students">
+    SELECT students.*,grade.gname FROM students INNER JOIN grade ON students.gid=grade.gid where 1=1
+    <if test="name != null">
+      and name like concat('%',#{name},'%')
+    </if>
+    <if test="endage != null">
+      and age > #{endage}
+    </if>
+    <if test="aage != null">
+      age &lt; #{aage}
+    </if>
+  </select>
+</mapper>
